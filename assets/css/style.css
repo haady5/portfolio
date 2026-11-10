@@ -285,28 +285,43 @@ html[dir="ltr"] .btn-primary:hover svg{transform:translateX(3px);}
 .services-section{padding-block:100px;}
 .services-list{border-top:1px solid var(--border);}
 .service-row{
-  display:grid;grid-template-columns:60px 1fr;gap:20px;
-  padding-block:34px;border-bottom:1px solid var(--border);
-  align-items:start;transition:background .3s;
+  display:grid;
+  /* mobile: number | icon+title | arrow  /  description on its own line */
+  grid-template-columns:auto 1fr auto;
+  grid-template-areas:
+    "num  main  arrow"
+    "desc desc desc";
+  gap:14px 16px;
+  padding-block:28px;border-bottom:1px solid var(--border);
+  align-items:center;transition:background .3s;
 }
-@media (min-width:760px){ .service-row{grid-template-columns:70px 1fr 1.2fr auto;align-items:center;gap:30px;} }
+@media (min-width:760px){
+  .service-row{
+    grid-template-columns:70px 1fr 1.2fr auto;
+    grid-template-areas:"num main desc arrow";
+    align-items:center;gap:30px;
+  }
+}
 .service-row:hover{background:var(--bg-alt);}
-.service-num{font-size:15px;color:var(--text-soft);font-weight:600;}
-.service-main{display:flex;align-items:center;gap:16px;}
+.service-num{grid-area:num;font-size:15px;color:var(--text-soft);font-weight:600;}
+.service-main{grid-area:main;display:flex;align-items:center;gap:16px;}
+.service-desc{grid-area:desc;color:var(--text-muted);font-size:15px;max-width:520px;line-height:1.7;}
 .service-icon{width:44px;height:44px;border-radius:12px;flex:none;background:var(--blue-tint);color:var(--accent);display:flex;align-items:center;justify-content:center;}
 .service-icon svg{width:22px;height:22px;}
 .service-main h3{font-size:21px;}
-.service-desc{color:var(--text-muted);font-size:15px;max-width:420px;}
 .service-arrow{
+  grid-area:arrow;
   width:44px;height:44px;border-radius:100px;border:1px solid var(--border-strong);
   display:flex;align-items:center;justify-content:center;
-  transition:transform .35s var(--ease),background .3s,border-color .3s,color .3s;
+  transition:background .3s,border-color .3s,color .3s;
   color:var(--text);flex:none;
 }
 .service-row:hover .service-arrow{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);}
-html[dir="rtl"] .service-row:hover .service-arrow{transform:rotate(-135deg);}
-html[dir="ltr"] .service-row:hover .service-arrow{transform:rotate(45deg);}
-.service-arrow svg{width:16px;height:16px;}
+.service-arrow svg{width:16px;height:16px;transition:transform .35s var(--ease);}
+/* the arrow points the way the reading direction goes */
+html[dir="rtl"] .service-arrow svg{transform:scaleX(-1);}
+.service-row:hover .service-arrow svg{transform:rotate(45deg);}
+html[dir="rtl"] .service-row:hover .service-arrow svg{transform:scaleX(-1) rotate(-45deg);}
 
 /* --- about --- */
 .about-section{padding-block:110px;overflow:hidden;}
