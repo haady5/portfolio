@@ -1,0 +1,63 @@
+# Haaady Magdy portfolio - Apache / cPanel config
+# (Netlify, Vercel, Cloudflare Pages and GitHub Pages ignore this file -
+#  they set compression and caching automatically.)
+
+# ---------- GZIP / BROTLI COMPRESSION ----------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json application/ld+json
+  AddOutputFilterByType DEFLATE image/svg+xml application/xml
+  AddOutputFilterByType DEFLATE font/woff2 application/font-woff2
+</IfModule>
+
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/xml
+  AddOutputFilterByType BROTLI_COMPRESS application/javascript application/json
+  AddOutputFilterByType BROTLI_COMPRESS image/svg+xml application/xml
+  AddOutputFilterByType BROTLI_COMPRESS font/woff2 application/font-woff2
+</IfModule>
+
+# ---------- CACHE HEADERS ----------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html                "access plus 1 hour"
+  ExpiresByType text/css                 "access plus 1 year"
+  ExpiresByType application/javascript    "access plus 1 year"
+  ExpiresByType application/json          "access plus 1 week"
+  ExpiresByType image/webp                "access plus 1 year"
+  ExpiresByType image/png                "access plus 1 year"
+  ExpiresByType font/woff2                "access plus 1 year"
+  ExpiresByType image/svg+xml            "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # fonts + css are versioned by hand - keep them cached hard
+  <FilesMatch "\.(woff2|css|js)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# ---------- MIME TYPES ----------
+<IfModule mod_mime.c>
+  AddType image/webp   .webp
+  AddType font/woff2   .woff2
+  AddType application/manifest+json .json
+</IfModule>
+
+# ---------- BLOCKS ----------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # never expose the build tooling / raw masters / audit output
+  RewriteRule ^(tools|data|\.audit)/ - [F,L]
+  RewriteRule (^|/)\. - [F,L]
+</IfModule>
+
+# do not list directory contents
+Options -Indexes

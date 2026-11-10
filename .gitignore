@@ -1,0 +1,20 @@
+# ---- original artwork masters -------------------------------------------
+# tools/raw/ holds the untouched source files (11 MB of client artwork).
+# They are NOT published: GitHub Pages ignores .htaccess, so anything in the
+# repo is publicly reachable. Keep them as a local backup, or push them to a
+# separate private branch if you want them in GitHub.
+tools/raw/
+
+# ---- audit output --------------------------------------------------------
+.audit/
+
+# ---- python --------------------------------------------------------------
+__pycache__/
+*.py[cod]
+
+# ---- os / editor ---------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
