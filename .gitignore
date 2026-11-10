@@ -1,20 +1,7 @@
-# ---- original artwork masters -------------------------------------------
-# tools/raw/ holds the untouched source files (11 MB of client artwork).
-# They are NOT published: GitHub Pages ignores .htaccess, so anything in the
-# repo is publicly reachable. Keep them as a local backup, or push them to a
-# separate private branch if you want them in GitHub.
-tools/raw/
-
-# ---- audit output --------------------------------------------------------
-.audit/
-
-# ---- python --------------------------------------------------------------
-__pycache__/
-*.py[cod]
-
-# ---- os / editor ---------------------------------------------------------
-.DS_Store
-Thumbs.db
-*.swp
-.idea/
-.vscode/
+# ---- build tooling (not part of the website) -----------------------------
+# These are the internal build/audit scripts used to produce the site.
+# They are kept in the "build-sources" branch of this repository and are
+# not needed to run or deploy the website.
+tools/
+build.py
+data/
