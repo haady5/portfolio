@@ -121,6 +121,26 @@ def inject_index(data):
     return len(html)
 
 
+def write_robots(data):
+    lines = ["User-agent: *", "Allow: /", "", "Sitemap: %s/sitemap.xml" % DOMAIN, ""]
+    with open(os.path.join(ROOT, "robots.txt"), "w", encoding="utf-8") as fh:
+        fh.write("\n".join(lines))
+
+
+def sync_index_domain():
+    """Keep the canonical / Open Graph URLs of the home page in sync with DOMAIN."""
+    index = os.path.join(ROOT, "index.html")
+    html = open(index, encoding="utf-8").read()
+    changed = False
+    for old in ("https://haaadymagdy.com", "https://haady5.github.io/portfolio"):
+        if old != DOMAIN and old in html:
+            html = html.replace(old, DOMAIN)
+            changed = True
+    if changed:
+        open(index, "w", encoding="utf-8").write(html)
+    return changed
+
+
 def read_data():
     with open(DATA, encoding="utf-8") as fh:
         return json.load(fh)
@@ -596,6 +616,12 @@ def main():
 
     write_sitemap(data)
     print("sitemap.xml  (%d urls)" % (len(data["projects"]) + 1))
+
+    write_robots(data)
+    if sync_index_domain():
+        print("index.html   (domain synced to %s)" % DOMAIN)
+    else:
+        print("index.html   (domain already %s)" % DOMAIN)
 
     size = inject_index(data)
     print("index.html   (project grid injected, %d bytes)" % size)
