@@ -234,6 +234,7 @@ def head(project=None, base="../", jsonld=""):
 <meta name="description" content="{desc_ar}">
 <meta name="keywords" content="مصمم جرافيك, تصميم هوية بصرية, سوشيال ميديا, حملات إعلانية, Graphic Designer, Haaady Magdy">
 <meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="google-site-verification" content="L_lwb_WBGld9fwgoARfQ-IIxrJj4-zy0x0mhX-AJchU">
 <meta name="author" content="Haaady Magdy">
 <link rel="canonical" href="{canonical}">
 <meta name="theme-color" content="#06080F">
