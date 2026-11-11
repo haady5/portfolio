@@ -72,13 +72,37 @@ def grid_markup(data):
         srcset = "%s %dw, %s %dw" % (src_m, cover["wm"], src, cover["cover_w"])
         cats = "".join('<span class="proj-cat">%s</span>' % esc(c["ar"])
                        for c in data["categories"] if c["id"] in p["categories"])
+        # dual-cover card (projects split into two versions): show the first
+        # version cover next to the second one so both styles are visible
+        # from the home page.
+        dual = p.get("dual_card") and p.get("vgroups")
+        media = ('<img src="{src_m}" srcset="{srcset}" sizes="{sizes}" alt="{title}"'
+                 ' loading="lazy" decoding="async" width="{wm}" height="{hm}">').format(
+                     src_m=src_m, srcset=srcset, sizes=CARD_SIZES,
+                     title=esc(p["title_ar"]), wm=cover["wm"], hm=cover["hm"])
+        badge = "{stack} {count} تصميم".format(stack=STACK_ICON, count=p["count"])
+        if dual:
+            second = next((im for im in p["images"] if im.get("cover2")), None)
+            if second:
+                s2 = "images/projects/%s/%s" % (p["slug"], second["cover2"])
+                s2_m = "images/projects/%s/%s" % (p["slug"], second["cover2_m"])
+                ss2 = "%s %dw, %s %dw" % (s2_m, second["wm"], s2, second["cover2_w"])
+                media = ('<img src="{m}" srcset="{ss}" sizes="{sizes}" alt="{t}"'
+                         ' loading="lazy" decoding="async" width="{w}" height="{h}">'
+                         '<img src="{m2}" srcset="{ss2}" sizes="{sizes}" alt="{t2}"'
+                         ' loading="lazy" decoding="async" width="{w2}" height="{h2}">').format(
+                             m=src_m, ss=srcset, sizes=CARD_SIZES,
+                             t=esc(p["title_ar"]), w=cover["wm"], h=cover["hm"],
+                             m2=s2_m, ss2=ss2,
+                             t2=esc(second["alt_ar"]), w2=second["wm"], h2=second["hm"])
+                badge = "{stack} {count} تصميم · إصدارين".format(
+                    stack=STACK_ICON, count=p["count"])
         out.append(
             '<a class="proj-card" href="projects/{slug}.html" style="--p-accent:{accent}"'
             ' data-cats="{cats_attr}"{featured}>'
-            '<div class="proj-media">'
-            '<img src="{src_m}" srcset="{srcset}" sizes="{sizes}" alt="{title}"'
-            ' loading="lazy" decoding="async" width="{wm}" height="{hm}">'
-            '<span class="proj-badge">{stack} {count} تصميم</span>'
+            '<div class="proj-media{dual_cls}">'
+            '{media}'
+            '<span class="proj-badge">{badge}</span>'
             '<span class="proj-arrow">{arrow}</span>'
             '</div>'
             '<div class="proj-body">'
@@ -91,10 +115,10 @@ def grid_markup(data):
                 slug=p["slug"], accent=p["accent"],
                 cats_attr=" ".join(p["categories"]),
                 featured=' data-featured="1"' if i == 0 else "",
-                src=src, src_m=src_m, srcset=srcset, sizes=CARD_SIZES,
-                wm=cover["wm"], hm=cover["hm"],
-                title=esc(p["title_ar"]), stack=STACK_ICON,
-                count=p["count"], arrow=ARROW_ICON,
+                dual_cls=" proj-media-dual" if dual else "",
+                media=media,
+                badge=badge, arrow=ARROW_ICON,
+                title=esc(p["title_ar"]),
                 kicker=esc(p["kicker_ar"]), desc=esc(p["desc_ar"]),
                 cats=cats, year=esc(p["year"]),
             )
@@ -376,20 +400,20 @@ GALLERY_SIZES = "(max-width:359px) 100vw, (max-width:699px) 50vw, (max-width:109
 HERO_SIZES = "(max-width:979px) 92vw, 44vw"
 
 
-def tile_markup(img, num, slug):
+def tile_markup(img, num, slug, idx):
     src = "../images/projects/%s/%s" % (slug, img["file"])
     src_m = "../images/projects/%s/%s" % (slug, img["file_m"])
     srcset = "%s %dw, %s %dw" % (src_m, img["wm"], src, img["w"])
     return (
         '<button type="button" class="pp-tile reveal" '
-        'data-src="{src}" data-alt="{alt}">'
+        'data-src="{src}" data-alt="{alt}" data-img="{idx}">'
         '<span class="pp-tile-num">{num:02d}</span>'
         '<img src="{src_m}" srcset="{srcset}" sizes="{sizes}" '
         'alt="{alt}" loading="lazy" decoding="async" width="{wm}" height="{hm}">'
         '<span class="pp-tile-cap">{alt}</span>'
         "</button>".format(
             src=src, src_m=src_m, srcset=srcset, sizes=GALLERY_SIZES,
-            alt=esc(img["alt_ar"]), num=num,
+            alt=esc(img["alt_ar"]), num=num, idx=idx,
             wm=img["wm"], hm=img["hm"],
         )
     )
@@ -397,24 +421,28 @@ def tile_markup(img, num, slug):
 
 def gallery_markup(project):
     """Gallery tiles. Projects with a "vgroups" field get one section per
-    version, each with its own heading and its own masonry grid; the tile
-    numbering stays continuous across versions."""
+    version, each with its own heading and its own masonry grid. The display
+    order of the sections comes from "vorder" (defaults to 1, 2, ...) and the
+    tile numbering is sequential in display order."""
     vgroups = project.get("vgroups")
     if not vgroups:
         return "\n".join(
-            tile_markup(img, i, project["slug"])
+            tile_markup(img, i, project["slug"], i - 1)
             for i, img in enumerate(project["images"], start=1)
         )
 
+    order = project.get("vorder") or list(range(1, len(vgroups) + 1))
     blocks = []
     num = 0
-    for gi, group in enumerate(vgroups):
+    for v in order:
+        group = vgroups[v - 1]
+        gi = v - 1
         tiles = []
-        for img in project["images"]:
-            if img.get("v") != gi + 1:
+        for idx, img in enumerate(project["images"]):
+            if img.get("v") != v:
                 continue
             num += 1
-            tiles.append(tile_markup(img, num, project["slug"]))
+            tiles.append(tile_markup(img, num, project["slug"], idx))
         if not tiles:
             continue
         blocks.append(

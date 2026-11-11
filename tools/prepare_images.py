@@ -5,11 +5,14 @@ One-off image preparation for the Haaady Magdy portfolio.
 Reads the raw artwork (images/*.webp + new/*.jpeg), converts everything to
 optimised WebP, and lays it out per project:
 
-    images/projects/<project-slug>/01-....webp      full size (max 1600px)
-    images/projects/<project-slug>/01-....-c.webp   grid cover  (max 900px)
+    images/projects/<project-slug>/01-....webp      full size (max 1400px)
+    images/projects/<project-slug>/01-....-l.webp   large     (max 1050px)
+    images/projects/<project-slug>/01-....-m.webp   medium    (max 760px)
 
-It also (re)writes data/projects.json which is the single source of truth
-for the whole site.
+It then MERGES the image entries into data/projects.json: project metadata
+(titles, descriptions, vgroups, dual_card, ...) that was edited by hand is
+preserved - only the "images" array and "count" of each known project are
+replaced.
 
 Run:  python3 tools/prepare_images.py
 """
@@ -91,9 +94,9 @@ SOURCES = {
         ("04-making-the-launch-count", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.04.46 PM.jpeg",
          "تصميم إطلاق الحملة بنجاح", "Making the launch count"),
     ],
-    "caspian": [
+    "fast-food": [
         ("01-food-no-alternative", "tools/raw/legacy/5.webp",
-         "حملة مطعم كاسبيان: الطعام ملوش بديل", "Caspian restaurant: food has no alternative"),
+         "حملة مطعم فاست فود: الطعام ملوش بديل", "Fast Food restaurant: food has no alternative"),
         ("02-traditional-taste", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.05.42 PM (1).jpeg",
          "تصميم تقمص واصدق غير المزة", "Traditional taste campaign design"),
         ("03-from-the-table", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.05.42 PM (2).jpeg",
@@ -115,11 +118,11 @@ SOURCES = {
     ],
     "lixora": [
         ("01-social-media-pack", "tools/raw/legacy/6.webp",
-         "باقة 20+ تصميم سوشيال ميديا للوكورا", "Lixora social media pack of 20+ designs"),
+         "باقة 20+ تصميم سوشيال ميديا لليكورا", "Lixora social media pack of 20+ designs"),
         ("02-skincare-lineup", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.06.11 PM.jpeg",
          "تصميم تشكيلة منتجات العناية بالبشرة", "Skincare product lineup design"),
         ("03-brand-story", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.06.12 PM (1).jpeg",
-         "تصميم حكاية علامة لوكورا", "Lixora brand story design"),
+         "تصميم حكاية علامة ليكورا", "Lixora brand story design"),
         ("04-product-lifestyle", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.06.12 PM (2).jpeg",
          "تصميم منتجات العناية بالبشرة في الاستخدام اليومي", "Daily skincare product design"),
         ("05-gift-set", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.06.12 PM (3).jpeg",
@@ -129,12 +132,30 @@ SOURCES = {
         ("07-summer-offer", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.06.12 PM (5).jpeg",
          "تصميم عرض اشترِ 2 واحصل على الثالث مجاناً", "Buy 2 get 1 offer design"),
         ("08-campaign-collage", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.06.12 PM.jpeg",
-         "ملخص منشورات حملة لوكورا", "Lixora campaign post collage"),
+         "ملخص منشورات حملة ليكورا", "Lixora campaign post collage"),
     ],
 }
 
 # ---------------------------------------------------------------------------
-# project metadata
+# per-image extras: grid cover variants and Besat version tags (v1 / v2)
+# ---------------------------------------------------------------------------
+EXTRA_COVERS = {
+    ("besat", "08-subscriptions-package"): True,   # second home-card cover (V2)
+}
+BESAT_NAMES = [
+    "01-launch-4-packages", "02-foundation-package", "03-training-package",
+    "04-integrated-package", "05-institutions-package", "06-needs-laptop",
+    "07-training-dashboard", "08-subscriptions-package",
+    "09-training-package-story", "10-integrated-package-story",
+    "11-institutions-package-story", "12-whatever-you-need",
+    "13-every-training-project", "14-dashboard-ui",
+]
+VERSION_OF = {}
+for _i, _n in enumerate(BESAT_NAMES):
+    VERSION_OF[("besat", _n)] = 1 if _i < 7 else 2
+
+# ---------------------------------------------------------------------------
+# project metadata (only used when a slug is missing from data/projects.json)
 # ---------------------------------------------------------------------------
 PROJECTS = [
     {
@@ -189,11 +210,11 @@ PROJECTS = [
         "cover": "01-rox-launch",
     },
     {
-        "slug": "caspian",
-        "title_ar": "كاسبيان | حملة المطعم",
-        "title_en": "Caspian | Restaurant campaign",
-        "client_ar": "مطعم كاسبيان",
-        "client_en": "Caspian Restaurant",
+        "slug": "fast-food",
+        "title_ar": "فاست فود | حملة المطعم",
+        "title_en": "Fast Food | Restaurant campaign",
+        "client_ar": "مطعم فاست فود",
+        "client_en": "Fast Food Restaurant",
         "kicker_ar": "مطاعم وأطعمة",
         "kicker_en": "Restaurants & food",
         "categories": ["social", "ads"],
@@ -201,15 +222,15 @@ PROJECTS = [
         "services_en": ["Social media", "Ad campaigns", "Food photography"],
         "year": "2026",
         "accent": "#FF3B30",
-        "desc_ar": "10 منشورات لحملة مطعم كاسبيان بهوية حمراء جريئة. مشاهد طعام واقعية، عروض تفاعلية، وكتابة قصيرة تشد الانتباه — كل قطعة مصممة لتتحول لطلب.",
-        "desc_en": "10 posts for the Caspian restaurant campaign with a bold red identity. Realistic food scenes, interactive offers and short copy built to convert into orders.",
+        "desc_ar": "10 منشورات لحملة مطعم فاست فود بهوية حمراء جريئة. مشاهد طعام واقعية، عروض تفاعلية، وكتابة قصيرة تشد الانتباه — كل قطعة مصممة لتتحول لطلب.",
+        "desc_en": "10 posts for the Fast Food restaurant campaign with a bold red identity. Realistic food scenes, interactive offers and short copy built to convert into orders.",
         "cover": "01-food-no-alternative",
     },
     {
         "slug": "lixora",
-        "title_ar": "لوكورا | حملة العناية بالبشرة",
+        "title_ar": "ليكورا | حملة العناية بالبشرة",
         "title_en": "Lixora | Skincare campaign",
-        "client_ar": "لوكورا",
+        "client_ar": "ليكورا",
         "client_en": "Lixora",
         "kicker_ar": "عناية بالبشرة والتجميل",
         "kicker_en": "Skincare & beauty",
@@ -218,7 +239,7 @@ PROJECTS = [
         "services_en": ["Social media", "Product photography", "Offers"],
         "year": "2026",
         "accent": "#F26522",
-        "desc_ar": "حملة متكاملة لعلامة لوكورا للعناية بالبشرة: تشكيلة منتجات، لقطات تفاصيل، عروض هدايا وحملات موسمية، مع نظام تصميم ثابت يغطي كل نقاط التواصل.",
+        "desc_ar": "حملة متكاملة لعلامة ليكورا للعناية بالبشرة: تشكيلة منتجات، لقطات تفاصيل، عروض هدايا وحملات موسمية، مع نظام تصميم ثابت يغطي كل نقاط التواصل.",
         "desc_en": "A full campaign for the Lixora skincare brand: product lineups, detail shots, gift offers and seasonal pushes, all held together by one consistent design system across every touchpoint.",
         "cover": "01-social-media-pack",
     },
@@ -246,6 +267,7 @@ def main():
     for p in PROJECTS:
         os.makedirs(os.path.join(OUT, p["slug"]), exist_ok=True)
 
+    images_by_slug = {}
     for slug, entries in SOURCES.items():
         images = []
         project = by_slug[slug]
@@ -281,32 +303,63 @@ def main():
                 entry["cover_m"] = name + "-m.webp"
                 entry["cover_w"] = cw
                 entry["cover_h"] = ch
+            # second home-card cover (projects with two versions)
+            if EXTRA_COVERS.get((slug, name)) and name != project["cover"]:
+                c2 = os.path.join(folder, name + "-c.webp")
+                c2w, c2h = convert(src_path, c2, MAX_COVER, QUALITY_COVER)
+                entry["cover2"] = name + "-c.webp"
+                entry["cover2_m"] = name + "-m.webp"
+                entry["cover2_w"] = c2w
+                entry["cover2_h"] = c2h
+            # Besat V1 / V2 tags
+            v = VERSION_OF.get((slug, name))
+            if v:
+                entry["v"] = v
             images.append(entry)
-        project["images"] = images
+        images_by_slug[slug] = images
         project["count"] = len(images)
 
-    data = {
-        "site": {
-            "domain": "https://haaadymagdy.com",
-            "name_ar": "هادي مجدي",
-            "name_en": "Haaady Magdy",
-        },
-        "categories": [
-            {"id": "social", "ar": "سوشيال ميديا", "en": "Social Media"},
-            {"id": "ads", "ar": "حملات إعلانية", "en": "Ad Campaigns"},
-            {"id": "branding", "ar": "براندنج", "en": "Branding"},
-            {"id": "uiux", "ar": "واجهات وموك أب", "en": "UI & Mockups"},
-        ],
-        "projects": PROJECTS,
-    }
+    # MERGE into the existing data/projects.json - hand-edited project
+    # metadata (titles, vgroups, vorder, dual_card, ...) is preserved.
+    if os.path.exists(DATA):
+        with open(DATA, encoding="utf-8") as fh:
+            data = json.load(fh)
+        by_slug_meta = {p["slug"]: p for p in PROJECTS}
+        for slug, images in images_by_slug.items():
+            project = next((p for p in data["projects"] if p["slug"] == slug), None)
+            if project is None:
+                # brand new project - fall back to the metadata above
+                project = dict(by_slug_meta.get(slug, {"slug": slug}))
+                data["projects"].append(project)
+            project["images"] = images
+            project["count"] = len(images)
+    else:
+        for p in PROJECTS:
+            if p["slug"] in images_by_slug:
+                p["images"] = images_by_slug[p["slug"]]
+                p["count"] = len(p["images"])
+        data = {
+            "site": {
+                "domain": "https://haaadymagdy.com",
+                "name_ar": "هادي مجدي",
+                "name_en": "Haaady Magdy",
+            },
+            "categories": [
+                {"id": "social", "ar": "سوشيال ميديا", "en": "Social Media"},
+                {"id": "ads", "ar": "حملات إعلانية", "en": "Ad Campaigns"},
+                {"id": "branding", "ar": "براندنج", "en": "Branding"},
+                {"id": "uiux", "ar": "واجهات وموك أب", "en": "UI & Mockups"},
+            ],
+            "projects": PROJECTS,
+        }
 
     with open(DATA, "w", encoding="utf-8") as fh:
         json.dump(data, fh, ensure_ascii=False, indent=2)
         fh.write("\n")
 
-    total = sum(p["count"] for p in PROJECTS)
-    print("projects: %d | images: %d" % (len(PROJECTS), total))
-    for p in PROJECTS:
+    total = sum(p["count"] for p in data["projects"])
+    print("projects: %d | images: %d" % (len(data["projects"]), total))
+    for p in data["projects"]:
         print("  %-9s %2d images" % (p["slug"], p["count"]))
     print("wrote " + os.path.relpath(DATA, ROOT))
 
