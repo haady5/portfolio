@@ -20,7 +20,7 @@ OUT_JS = os.path.join(ROOT, "assets", "js", "data.js")
 OUT_PAGES = os.path.join(ROOT, "projects")
 SITEMAP = os.path.join(ROOT, "sitemap.xml")
 
-DOMAIN = "https://haaadymagdy.com"
+DOMAIN = "https://haady5.github.io/portfolio"
 
 
 def esc(text):
