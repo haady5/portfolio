@@ -11,7 +11,7 @@ HOW IT IS ORGANISED
 
   index.html              Home page (hero, services, project grid, about, contact)
   projects/               One static page per project
-      besat.html  wejhati.html  rox-ab.html  caspian.html  lixora.html
+      besat.html  wejhati.html  rox-ab.html  fast-food.html  lixora.html
 
   assets/
       css/style.css       The whole design system + self hosted @font-face rules
@@ -42,8 +42,8 @@ PROJECTS (5 projects · 43 designs)
   besat       بساط             14      purple
   wejhati     وجهتي             7      lime
   rox-ab      ROX x AB          4      silver
-  caspian     كاسبيان          10      red
-  lixora      لوكورا            8      orange
+  fast-food   فاست فود         10      red
+  lixora      ليكورا            8      orange
 
 
 THEME

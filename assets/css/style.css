@@ -606,6 +606,21 @@ html[lang="ar"] .pp-fact span{text-transform:none;letter-spacing:0;}
 .pp-gallery-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:34px;}
 .pp-gallery-head h2{font-size:clamp(24px,3vw,34px);}
 .pp-gallery-head p{color:var(--text-muted);font-size:15px;margin-top:8px;}
+/* version section headings (projects split into V1 / V2) */
+.pp-version-head{
+  display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;
+  margin:44px 0 20px;padding-top:28px;border-top:1px solid var(--border);
+}
+.pp-gallery-head + .pp-version-head{margin-top:0;padding-top:0;border-top:0;}
+.pp-version-head h3{
+  font-size:clamp(18px,2.2vw,24px);
+  display:flex;align-items:center;gap:12px;
+}
+.pp-version-head h3::before{
+  content:"";width:10px;height:10px;border-radius:100px;flex:none;
+  background:var(--p-accent,var(--accent));
+}
+.pp-version-head p{color:var(--text-muted);font-size:14px;margin-top:6px;}
 
 .pp-gallery{
   display:grid;

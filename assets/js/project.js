@@ -30,6 +30,17 @@
     set("client", pick(project.client_ar, project.client_en));
     set("count", String(project.count));
 
+    /* version headings (projects split into V1 / V2) */
+    const vgroups = project.vgroups || [];
+    document.querySelectorAll("[data-vgi]").forEach(function (head) {
+      const g = vgroups[parseInt(head.getAttribute("data-vgi"), 10)];
+      if (!g) return;
+      const t = head.querySelector('[data-vg="title"]');
+      const s = head.querySelector('[data-vg="sub"]');
+      if (t) t.textContent = pick(g.title_ar, g.title_en);
+      if (s) s.textContent = pick(g.sub_ar, g.sub_en);
+    });
+
     const services = pick(project.services_ar, project.services_en) || [];
     document.querySelectorAll('[data-p="services"]').forEach(function (box) {
       box.innerHTML = services.map(function (s) {
@@ -69,21 +80,22 @@
     }
   }
 
-  /* ---------- masonry gallery ---------- */
-  const galleryEl = document.getElementById("ppGallery");
+  /* ---------- masonry gallery (one or more grids) ---------- */
+  const galleries = Array.prototype.slice.call(document.querySelectorAll(".pp-gallery"));
   let masonryTimer = null;
 
   function layoutMasonry() {
-    if (!galleryEl) return;
-    const styles = getComputedStyle(galleryEl);
-    const rowGap = parseFloat(styles.rowGap) || 0;
-    const rowHeight = parseFloat(styles.gridAutoRows) || 4;
-    galleryEl.querySelectorAll(".pp-tile").forEach(function (tile) {
-      /* offsetHeight ignores the GSAP scale transform - layout height is what matters */
-      const h = tile.offsetHeight;
-      if (!h) return;
-      const span = Math.max(1, Math.round((h + rowGap) / (rowHeight + rowGap)));
-      tile.style.gridRowEnd = "span " + span;
+    galleries.forEach(function (galleryEl) {
+      const styles = getComputedStyle(galleryEl);
+      const rowGap = parseFloat(styles.rowGap) || 0;
+      const rowHeight = parseFloat(styles.gridAutoRows) || 4;
+      galleryEl.querySelectorAll(".pp-tile").forEach(function (tile) {
+        /* offsetHeight ignores the scale transform - layout height is what matters */
+        const h = tile.offsetHeight;
+        if (!h) return;
+        const span = Math.max(1, Math.round((h + rowGap) / (rowHeight + rowGap)));
+        tile.style.gridRowEnd = "span " + span;
+      });
     });
   }
 
@@ -92,25 +104,26 @@
     masonryTimer = setTimeout(layoutMasonry, 80);
   }
 
-  if (galleryEl) {
+  if (galleries.length) {
     layoutMasonry();
-    galleryEl.querySelectorAll("img").forEach(function (img) {
-      if (img.complete) return;
-      img.addEventListener("load", scheduleMasonry);
-      img.addEventListener("error", scheduleMasonry);
+    galleries.forEach(function (galleryEl) {
+      galleryEl.querySelectorAll("img").forEach(function (img) {
+        if (img.complete) return;
+        img.addEventListener("load", scheduleMasonry);
+        img.addEventListener("error", scheduleMasonry);
+      });
+      if ("ResizeObserver" in window) {
+        new ResizeObserver(scheduleMasonry).observe(galleryEl);
+      }
     });
     window.addEventListener("resize", scheduleMasonry);
     window.addEventListener("orientationchange", scheduleMasonry);
-    if ("ResizeObserver" in window) {
-      new ResizeObserver(scheduleMasonry).observe(galleryEl);
-    }
     document.addEventListener("haaady:lang", scheduleMasonry);
   }
 
-  /* ---------- lightbox ---------- */
-  const gallery = galleryEl;
+  /* ---------- lightbox (works across all gallery grids) ---------- */
   const lbx = document.getElementById("lbx");
-  if (gallery && lbx) {
+  if (galleries.length && lbx) {
     const lbImg = lbx.querySelector(".lbx-stage img");
     const lbTitle = lbx.querySelector(".lbx-title");
     const lbCount = lbx.querySelector(".lbx-count");
@@ -118,6 +131,10 @@
     let list = [];
     let pos = 0;
     let lastFocused = null;
+
+    function allTiles() {
+      return Array.prototype.slice.call(document.querySelectorAll(".pp-tile"));
+    }
 
     function show(i) {
       if (i < 0 || i >= list.length) return;
@@ -150,7 +167,7 @@
     }
 
     function buildList() {
-      list = Array.prototype.map.call(gallery.querySelectorAll(".pp-tile"), function (tile) {
+      list = allTiles().map(function (tile) {
         const img = tile.querySelector("img");
         return {
           src: tile.getAttribute("data-src") || (img ? img.getAttribute("src") : ""),
@@ -160,15 +177,17 @@
     }
 
     function tileIndex(tile) {
-      return Array.prototype.indexOf.call(gallery.querySelectorAll(".pp-tile"), tile);
+      return allTiles().indexOf(tile);
     }
 
-    gallery.addEventListener("click", function (e) {
-      const tile = e.target.closest(".pp-tile");
-      if (!tile) return;
-      const idx = tileIndex(tile);
-      buildList();
-      open(idx);
+    galleries.forEach(function (galleryEl) {
+      galleryEl.addEventListener("click", function (e) {
+        const tile = e.target.closest(".pp-tile");
+        if (!tile) return;
+        const idx = tileIndex(tile);
+        buildList();
+        open(idx);
+      });
     });
     /* <button> handles Enter / Space natively - no keydown handler needed */
 
