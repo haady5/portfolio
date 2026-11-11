@@ -1,7 +1,7 @@
 /* AUTO-GENERATED from data/projects.json by build.py - do not edit by hand */
 window.HAAADY_PROJECTS = {
   "site": {
-    "domain": "https://haaadymagdy.com",
+    "domain": "https://haady5.github.io/portfolio",
     "name_ar": "هادي مجدي",
     "name_en": "Haaady Magdy"
   },

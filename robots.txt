@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://haaadymagdy.com/sitemap.xml
+Sitemap: https://haady5.github.io/portfolio/sitemap.xml
