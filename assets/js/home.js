@@ -37,7 +37,10 @@
     const title = pick(p.title_ar, p.title_en);
     const kicker = pick(p.kicker_ar, p.kicker_en);
     const desc = pick(p.desc_ar, p.desc_en);
-    const countLabel = pick(p.count + " تصميم", p.count + " designs");
+    const dual = p.dual_card && p.vgroups;
+    const countLabel = dual
+      ? pick(p.count + " تصميم · إصدارين", p.count + " designs · 2 versions")
+      : pick(p.count + " تصميم", p.count + " designs");
 
     var cats = "";
     p.categories.forEach(function (id) {
@@ -49,13 +52,31 @@
     const srcM = "images/projects/" + p.slug + "/" + cover.cover_m;
     const srcset = srcM + " " + cover.wm + "w, " + src + " " + cover.cover_w + "w";
 
+    var media =
+      '<img src="' + srcM + '" srcset="' + srcset + '" sizes="' + CARD_SIZES + '"' +
+      ' alt="' + title + '" loading="lazy" decoding="async" width="' + cover.wm + '" height="' + cover.hm + '">';
+    var dualMedia = false;
+
+    if (dual) {
+      var second = p.images.filter(function (im) { return im.cover2; })[0];
+      if (second) {
+        var s2 = "images/projects/" + p.slug + "/" + second.cover2;
+        var s2M = "images/projects/" + p.slug + "/" + second.cover2_m;
+        var ss2 = s2M + " " + second.wm + "w, " + s2 + " " + second.cover2_w + "w";
+        var alt2 = pick(second.alt_ar, second.alt_en);
+        media +=
+          '<img src="' + s2M + '" srcset="' + ss2 + '" sizes="' + CARD_SIZES + '"' +
+          ' alt="' + alt2 + '" loading="lazy" decoding="async" width="' + second.wm + '" height="' + second.hm + '">';
+        dualMedia = true;
+      }
+    }
+
     return (
       '<a class="proj-card" href="projects/' + p.slug + '.html" style="--p-accent:' + p.accent + '"' +
       ' data-cats="' + p.categories.join(" ") + '"' +
       (index === 0 ? ' data-featured="1"' : "") + ">" +
-        '<div class="proj-media">' +
-          '<img src="' + srcM + '" srcset="' + srcset + '" sizes="' + CARD_SIZES + '"' +
-          ' alt="' + title + '" loading="lazy" decoding="async" width="' + cover.wm + '" height="' + cover.hm + '">' +
+        '<div class="proj-media' + (dualMedia ? " proj-media-dual" : "") + '">' +
+          media +
           '<span class="proj-badge">' + STACK + countLabel + "</span>" +
           '<span class="proj-arrow">' + ARROW + "</span>" +
         "</div>" +

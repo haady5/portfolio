@@ -49,8 +49,9 @@
     });
 
     /* gallery captions follow the language */
-    document.querySelectorAll(".pp-tile").forEach(function (tile, i) {
-      const img = project.images[i];
+    document.querySelectorAll(".pp-tile").forEach(function (tile) {
+      const idx = parseInt(tile.getAttribute("data-img"), 10);
+      const img = project.images[isNaN(idx) ? 0 : idx];
       if (!img) return;
       const alt = pick(img.alt_ar, img.alt_en);
       tile.setAttribute("data-alt", alt);

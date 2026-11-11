@@ -23,7 +23,9 @@ HOW IT IS ORGANISED
       js/project.js       Project page: masonry gallery, lightbox, prev/next
 
   images/
-      hero.webp  hero-900.webp  hero-620.webp  hero-320.webp   Haady.webp
+      hero.webp  hero-900.webp  hero-620.webp  hero-320.webp   light hero (light theme)
+      hero-dark.webp  hero-dark-900/620/320.webp                dark hero (DARK = default)
+      Haady.webp
       Haady-760.webp  Haady-480.webp
       icon-180.png  icon-192.png  icon-512.png
       projects/<project-slug>/<name>.webp       full size (max 1400px)
@@ -39,7 +41,11 @@ HOW IT IS ORGANISED
 PROJECTS (5 projects · 43 designs)
 ----------------------------------
   slug        client          designs  accent
-  besat       بساط             14      purple
+  besat       بساط             14      purple   - gallery split into V1 (launch
+                                                 posts with people) and V2 (flat
+                                                 blue posts/stories); V2 comes
+                                                 first on the page, and the home
+                                                 card shows BOTH version covers
   wejhati     وجهتي             7      lime
   rox-ab      ROX x AB          4      silver
   fast-food   فاست فود         10      red
@@ -52,6 +58,13 @@ DARK IS THE DEFAULT. The visitor's OS setting is ignored on purpose.
 The choice is saved in localStorage under "haaady_theme".
 To change the default, edit the "dark" default in assets/js/main.js and in
 the inline script in the <head> of index.html + projects/*.html.
+
+The hero portrait follows the theme: images/hero-dark-*.webp on dark
+(the default) and images/hero-*.webp on light. An inline script right
+before the hero <img> picks the right variant BEFORE the download starts,
+so only one hero file is ever fetched. The hero sources live in
+tools/raw/ (hero-dark.png and the original hero PNG) - regenerate the
+variants at quality 85-90, never lower.
 
 Both themes are defined with CSS custom properties at the top of
 assets/css/style.css — :root is the dark palette, html[data-theme="light"]

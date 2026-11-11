@@ -95,6 +95,13 @@
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", theme === "dark" ? "#06080F" : "#1B4DFF");
     store("haaady_theme", theme);
+    /* the hero portrait follows the theme (dark hero / light hero) */
+    const hero = document.getElementById("heroImg");
+    if (hero && hero.getAttribute("data-active-set") !== theme) {
+      hero.src = hero.getAttribute("data-" + theme + "-src");
+      hero.srcset = hero.getAttribute("data-" + theme + "-srcset");
+      hero.setAttribute("data-active-set", theme);
+    }
     document.dispatchEvent(new CustomEvent("haaady:theme", { detail: { theme: theme } }));
   }
 

@@ -25,6 +25,19 @@
 <meta name="author" content="Haaady Magdy">
 <link rel="canonical" href="https://haaadymagdy.com/">
 <meta name="theme-color" content="#06080F">
+<link rel="preload" as="image" href="images/hero-dark-620.webp" imagesrcset="images/hero-dark-320.webp 320w, images/hero-dark-620.webp 620w, images/hero-dark-900.webp 900w" imagesizes="(max-width:620px) 72vw, 276px" fetchpriority="high" id="heroPreload">
+<script>
+/* the preload above targets the dark hero (the default); visitors who saved
+   the light theme get theirs swapped before it is fetched */
+(function(){
+  try{
+    if((localStorage.getItem("haaady_theme")||"dark")!=="light")return;
+    var l=document.getElementById("heroPreload");
+    l.href="images/hero-620.webp";
+    l.imageSrcset="images/hero-320.webp 320w, images/hero-620.webp 620w, images/hero-900.webp 900w";
+  }catch(e){}
+})();
+</script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Haaady Magdy">
 <meta property="og:url" content="https://haaadymagdy.com/">
@@ -47,7 +60,6 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/IBMPlexSansArabic-400-arabic.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/IBMPlexSansArabic-700-arabic.woff2" crossorigin>
-<link rel="preload" as="image" href="images/hero-620.webp" imagesrcset="images/hero-320.webp 320w, images/hero-620.webp 620w, images/hero-900.webp 900w, images/hero.webp 1100w" imagesizes="(max-width:620px) 72vw, 276px" fetchpriority="high">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -166,7 +178,29 @@
     <div class="hero-visual">
       <div class="dot-grid" aria-hidden="true"></div>
       <div class="hero-portrait-wrap">
-        <img src="images/hero-620.webp" srcset="images/hero-320.webp 320w, images/hero-620.webp 620w, images/hero-900.webp 900w, images/hero.webp 1100w" sizes="(max-width:620px) 72vw, 276px" alt="هادي مجدي - مصمم جرافيك" class="hero-portrait" width="1100" height="1100" fetchpriority="high">
+        <!-- the hero follows the saved theme (DARK is the default). The inline
+             script picks the right variant BEFORE the browser starts the
+             download, so only one hero file is ever fetched. -->
+        <img id="heroImg" class="hero-portrait" width="1254" height="1254"
+             data-dark-src="images/hero-dark-620.webp"
+             data-dark-srcset="images/hero-dark-320.webp 320w, images/hero-dark-620.webp 620w, images/hero-dark-900.webp 900w, images/hero-dark.webp 1254w"
+             data-light-src="images/hero-620.webp"
+             data-light-srcset="images/hero-320.webp 320w, images/hero-620.webp 620w, images/hero-900.webp 900w, images/hero.webp 1100w"
+             sizes="(max-width:620px) 72vw, 276px"
+             alt="هادي مجدي - مصمم جرافيك" fetchpriority="high">
+        <script>
+        (function(){
+          var img = document.getElementById("heroImg");
+          if (!img) return;
+          var theme = "dark";
+          try { theme = localStorage.getItem("haaady_theme") || "dark"; } catch(e){}
+          var set = theme === "light" ? "light" : "dark";
+          img.src = img.getAttribute("data-" + set + "-src");
+          img.srcset = img.getAttribute("data-" + set + "-srcset");
+          /* expose the choice so main.js can swap it live when the visitor toggles */
+          img.setAttribute("data-active-set", set);
+        })();
+        </script>
       </div>
     </div>
   </div>
@@ -298,7 +332,7 @@
     </div>
 
     <div class="proj-grid" id="projectGrid"><!-- GRID:START -->
-<a class="proj-card" href="projects/besat.html" style="--p-accent:#7C6BFF" data-cats="social branding uiux" data-featured="1"><div class="proj-media"><img src="images/projects/besat/01-launch-4-packages-m.webp" srcset="images/projects/besat/01-launch-4-packages-m.webp 760w, images/projects/besat/01-launch-4-packages-c.webp 640w" sizes="(max-width:679px) 100vw, (max-width:1059px) 50vw, 33vw" alt="بساط | نظام باقات الاشتراك" loading="lazy" decoding="async" width="760" height="760"><span class="proj-badge"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="12" height="12" rx="2"/><path d="M9 21h10a2 2 0 002-2V9"/></svg> 14 تصميم</span><span class="proj-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div><div class="proj-body"><span class="proj-kicker">منصة تعليمية رقمية</span><h3 class="proj-title">بساط | نظام باقات الاشتراك</h3><p class="proj-desc">حملة إطلاق كاملة لنظام باقات الاشتراك في منصة بساط التعليمية. صُممت 14 قطعة بصرية متناسقة تغطي باقات التأسيس والتدريب والمتكاملة والمؤسسات، مع تركيب ثلاثي الأبعاد وموك أب للوحة التحكم.</p><div class="proj-foot"><div class="proj-cats"><span class="proj-cat">سوشيال ميديا</span><span class="proj-cat">براندنج</span><span class="proj-cat">واجهات وموك أب</span></div><span class="proj-count">2026</span></div></div></a>
+<a class="proj-card" href="projects/besat.html" style="--p-accent:#7C6BFF" data-cats="social branding uiux" data-featured="1"><div class="proj-media proj-media-dual"><img src="images/projects/besat/01-launch-4-packages-m.webp" srcset="images/projects/besat/01-launch-4-packages-m.webp 760w, images/projects/besat/01-launch-4-packages-c.webp 640w" sizes="(max-width:679px) 100vw, (max-width:1059px) 50vw, 33vw" alt="بساط | نظام باقات الاشتراك" loading="lazy" decoding="async" width="760" height="760"><img src="images/projects/besat/08-subscriptions-package-m.webp" srcset="images/projects/besat/08-subscriptions-package-m.webp 608w, images/projects/besat/08-subscriptions-package-c.webp 512w" sizes="(max-width:679px) 100vw, (max-width:1059px) 50vw, 33vw" alt="باقة الاشتراكات لمنصة بساط" loading="lazy" decoding="async" width="608" height="760"><span class="proj-badge"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="12" height="12" rx="2"/><path d="M9 21h10a2 2 0 002-2V9"/></svg> 14 تصميم · إصدارين</span><span class="proj-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div><div class="proj-body"><span class="proj-kicker">منصة تعليمية رقمية</span><h3 class="proj-title">بساط | نظام باقات الاشتراك</h3><p class="proj-desc">حملة إطلاق كاملة لنظام باقات الاشتراك في منصة بساط التعليمية. صُممت 14 قطعة بصرية متناسقة تغطي باقات التأسيس والتدريب والمتكاملة والمؤسسات، مع تركيب ثلاثي الأبعاد وموك أب للوحة التحكم.</p><div class="proj-foot"><div class="proj-cats"><span class="proj-cat">سوشيال ميديا</span><span class="proj-cat">براندنج</span><span class="proj-cat">واجهات وموك أب</span></div><span class="proj-count">2026</span></div></div></a>
 <a class="proj-card" href="projects/wejhati.html" style="--p-accent:#B4E01F" data-cats="social ads"><div class="proj-media"><img src="images/projects/wejhati/01-app-launch-m.webp" srcset="images/projects/wejhati/01-app-launch-m.webp 760w, images/projects/wejhati/01-app-launch-c.webp 640w" sizes="(max-width:679px) 100vw, (max-width:1059px) 50vw, 33vw" alt="وجهتي | حملة إطلاق تطبيق الحجز" loading="lazy" decoding="async" width="760" height="760"><span class="proj-badge"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="12" height="12" rx="2"/><path d="M9 21h10a2 2 0 002-2V9"/></svg> 7 تصميم</span><span class="proj-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div><div class="proj-body"><span class="proj-kicker">تطبيق حجز رحلات</span><h3 class="proj-title">وجهتي | حملة إطلاق تطبيق الحجز</h3><p class="proj-desc">حملة إطلاق لتطبيق وجهتي لحجز الرحلات. هوية بصرية بلون أخضر جريء، تعتمد على مشاهد واقعية للشخصية داخل مطار وخلفية Portland، مع رسائل واضحة تشرح سهولة الحجز.</p><div class="proj-foot"><div class="proj-cats"><span class="proj-cat">سوشيال ميديا</span><span class="proj-cat">حملات إعلانية</span></div><span class="proj-count">2026</span></div></div></a>
 <a class="proj-card" href="projects/rox-ab.html" style="--p-accent:#C9CDD6" data-cats="ads branding"><div class="proj-media"><img src="images/projects/rox-ab/01-rox-launch-m.webp" srcset="images/projects/rox-ab/01-rox-launch-m.webp 608w, images/projects/rox-ab/01-rox-launch-c.webp 512w" sizes="(max-width:679px) 100vw, (max-width:1059px) 50vw, 33vw" alt="ROX × AB Studios | حملة إعلانات فاخرة" loading="lazy" decoding="async" width="608" height="760"><span class="proj-badge"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="12" height="12" rx="2"/><path d="M9 21h10a2 2 0 002-2V9"/></svg> 4 تصميم</span><span class="proj-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div><div class="proj-body"><span class="proj-kicker">وكالات وعلامات سيارات</span><h3 class="proj-title">ROX × AB Studios | حملة إعلانات فاخرة</h3><p class="proj-desc">سلسلة إعلانات فاخرة بالأبيض والأسود لسيارات ROX بالشراكة مع AB Studios. معالجات صور دقيقة، إضاءة استوديو عالية التباين، وسرد بصري يحوّل الرؤية إلى تجربة.</p><div class="proj-foot"><div class="proj-cats"><span class="proj-cat">حملات إعلانية</span><span class="proj-cat">براندنج</span></div><span class="proj-count">2026</span></div></div></a>
 <a class="proj-card" href="projects/fast-food.html" style="--p-accent:#FF3B30" data-cats="social ads"><div class="proj-media"><img src="images/projects/fast-food/01-food-no-alternative-m.webp" srcset="images/projects/fast-food/01-food-no-alternative-m.webp 760w, images/projects/fast-food/01-food-no-alternative-c.webp 640w" sizes="(max-width:679px) 100vw, (max-width:1059px) 50vw, 33vw" alt="فاست فود | حملة المطعم" loading="lazy" decoding="async" width="760" height="760"><span class="proj-badge"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="12" height="12" rx="2"/><path d="M9 21h10a2 2 0 002-2V9"/></svg> 10 تصميم</span><span class="proj-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div><div class="proj-body"><span class="proj-kicker">مطاعم وأطعمة</span><h3 class="proj-title">فاست فود | حملة المطعم</h3><p class="proj-desc">10 منشورات لحملة مطعم فاست فود بهوية حمراء جريئة. مشاهد طعام واقعية، عروض تفاعلية وكتابة قصيرة تشد الانتباه — كل قطعة مصممة لتتحول لطلب.</p><div class="proj-foot"><div class="proj-cats"><span class="proj-cat">سوشيال ميديا</span><span class="proj-cat">حملات إعلانية</span></div><span class="proj-count">2026</span></div></div></a>

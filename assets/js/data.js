@@ -171,6 +171,10 @@ window.HAAADY_PROJECTS = {
           "hm": 760,
           "alt_ar": "باقة الاشتراكات لمنصة بساط",
           "alt_en": "Besat subscriptions package",
+          "cover2": "08-subscriptions-package-c.webp",
+          "cover2_m": "08-subscriptions-package-m.webp",
+          "cover2_w": 512,
+          "cover2_h": 640,
           "v": 2
         },
         {
@@ -272,6 +276,11 @@ window.HAAADY_PROJECTS = {
           "sub_ar": "تصميمات مسطحة بهوية الأزرق للسوشيال ميديا",
           "sub_en": "Flat designs in the blue identity for social media"
         }
+      ],
+      "dual_card": true,
+      "vorder": [
+        2,
+        1
       ]
     },
     {
