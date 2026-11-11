@@ -30,7 +30,7 @@ const DEVICES = [
 
 const PAGES = [
   { name: "home", url: "/index.html" },
-  { name: "project", url: "/projects/caspian.html" },
+  { name: "project", url: "/projects/besat.html" },
   { name: "project-lixora", url: "/projects/lixora.html" },
 ];
 

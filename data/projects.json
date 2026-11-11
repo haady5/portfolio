@@ -71,7 +71,8 @@
           "cover": "01-launch-4-packages-c.webp",
           "cover_m": "01-launch-4-packages-m.webp",
           "cover_w": 640,
-          "cover_h": 640
+          "cover_h": 640,
+          "v": 1
         },
         {
           "file": "02-foundation-package.webp",
@@ -84,7 +85,8 @@
           "wm": 760,
           "hm": 760,
           "alt_ar": "باقة التأسيس لمنصة بساط",
-          "alt_en": "Besat foundation package"
+          "alt_en": "Besat foundation package",
+          "v": 1
         },
         {
           "file": "03-training-package.webp",
@@ -97,7 +99,8 @@
           "wm": 760,
           "hm": 760,
           "alt_ar": "باقة التدريب لمنصة بساط",
-          "alt_en": "Besat training package"
+          "alt_en": "Besat training package",
+          "v": 1
         },
         {
           "file": "04-integrated-package.webp",
@@ -110,7 +113,8 @@
           "wm": 760,
           "hm": 760,
           "alt_ar": "الباقة المتكاملة لمنصة بساط",
-          "alt_en": "Besat integrated package"
+          "alt_en": "Besat integrated package",
+          "v": 1
         },
         {
           "file": "05-institutions-package.webp",
@@ -123,7 +127,8 @@
           "wm": 760,
           "hm": 760,
           "alt_ar": "باقة المؤسسات لمنصة بساط",
-          "alt_en": "Besat institutions package"
+          "alt_en": "Besat institutions package",
+          "v": 1
         },
         {
           "file": "06-needs-laptop.webp",
@@ -136,7 +141,8 @@
           "wm": 760,
           "hm": 760,
           "alt_ar": "تصميم باقة على شاشة لابتوب",
-          "alt_en": "Package design shown on a laptop screen"
+          "alt_en": "Package design shown on a laptop screen",
+          "v": 1
         },
         {
           "file": "07-training-dashboard.webp",
@@ -149,7 +155,8 @@
           "wm": 760,
           "hm": 760,
           "alt_ar": "باقة كل مشروع تدريبي مع لوحة التحكم",
-          "alt_en": "Training project package with dashboard"
+          "alt_en": "Training project package with dashboard",
+          "v": 1
         },
         {
           "file": "08-subscriptions-package.webp",
@@ -162,7 +169,8 @@
           "wm": 608,
           "hm": 760,
           "alt_ar": "باقة الاشتراكات لمنصة بساط",
-          "alt_en": "Besat subscriptions package"
+          "alt_en": "Besat subscriptions package",
+          "v": 2
         },
         {
           "file": "09-training-package-story.webp",
@@ -175,7 +183,8 @@
           "wm": 608,
           "hm": 760,
           "alt_ar": "باقة التدريب ضمن سلسلة الإعلانات",
-          "alt_en": "Training package in a campaign series"
+          "alt_en": "Training package in a campaign series",
+          "v": 2
         },
         {
           "file": "10-integrated-package-story.webp",
@@ -188,7 +197,8 @@
           "wm": 608,
           "hm": 760,
           "alt_ar": "الباقة المتكاملة ضمن سلسلة الإعلانات",
-          "alt_en": "Integrated package in a campaign series"
+          "alt_en": "Integrated package in a campaign series",
+          "v": 2
         },
         {
           "file": "11-institutions-package-story.webp",
@@ -201,7 +211,8 @@
           "wm": 608,
           "hm": 760,
           "alt_ar": "باقة المؤسسات ضمن سلسلة الإعلانات",
-          "alt_en": "Institutions package in a campaign series"
+          "alt_en": "Institutions package in a campaign series",
+          "v": 2
         },
         {
           "file": "12-whatever-you-need.webp",
@@ -214,7 +225,8 @@
           "wm": 608,
           "hm": 760,
           "alt_ar": "تصميم أيا كان احتياجك في بسط",
-          "alt_en": "Whatever you need campaign design"
+          "alt_en": "Whatever you need campaign design",
+          "v": 2
         },
         {
           "file": "13-every-training-project.webp",
@@ -227,7 +239,8 @@
           "wm": 608,
           "hm": 760,
           "alt_ar": "تصميم كل مشروع تدريبي له باقة",
-          "alt_en": "Every training project gets its own package"
+          "alt_en": "Every training project gets its own package",
+          "v": 2
         },
         {
           "file": "14-dashboard-ui.webp",
@@ -240,10 +253,25 @@
           "wm": 608,
           "hm": 760,
           "alt_ar": "واجهة اختيار الباقة داخل منصة بساط",
-          "alt_en": "Package chooser interface inside Besat"
+          "alt_en": "Package chooser interface inside Besat",
+          "v": 2
         }
       ],
-      "count": 14
+      "count": 14,
+      "vgroups": [
+        {
+          "title_ar": "الإصدار الأول — بوستات الحملة",
+          "title_en": "Version 1 — Campaign posts",
+          "sub_ar": "باقات النظام بمشاهد ثلاثية الأبعاد وشخصيات واقعية",
+          "sub_en": "The packages in 3D scenes with realistic characters"
+        },
+        {
+          "title_ar": "الإصدار الثاني — ستوريات وبوستات",
+          "title_en": "Version 2 — Stories & posts",
+          "sub_ar": "تصميمات مسطحة بهوية الأزرق للسوشيال ميديا",
+          "sub_en": "Flat designs in the blue identity for social media"
+        }
+      ]
     },
     {
       "slug": "wejhati",
@@ -459,11 +487,11 @@
       "count": 4
     },
     {
-      "slug": "caspian",
-      "title_ar": "كاسبيان | حملة المطعم",
-      "title_en": "Caspian | Restaurant campaign",
-      "client_ar": "مطعم كاسبيان",
-      "client_en": "Caspian Restaurant",
+      "slug": "fast-food",
+      "title_ar": "فاست فود | حملة المطعم",
+      "title_en": "Fast Food | Restaurant campaign",
+      "client_ar": "مطعم فاست فود",
+      "client_en": "Fast Food Restaurant",
       "kicker_ar": "مطاعم وأطعمة",
       "kicker_en": "Restaurants & food",
       "categories": [
@@ -482,8 +510,8 @@
       ],
       "year": "2026",
       "accent": "#FF3B30",
-      "desc_ar": "10 منشورات لحملة مطعم كاسبيان بهوية حمراء جريئة. مشاهد طعام واقعية، عروض تفاعلية، وكتابة قصيرة تشد الانتباه — كل قطعة مصممة لتتحول لطلب.",
-      "desc_en": "10 posts for the Caspian restaurant campaign with a bold red identity. Realistic food scenes, interactive offers and short copy built to convert into orders.",
+      "desc_ar": "10 منشورات لحملة مطعم فاست فود بهوية حمراء جريئة. مشاهد طعام واقعية، عروض تفاعلية وكتابة قصيرة تشد الانتباه — كل قطعة مصممة لتتحول لطلب.",
+      "desc_en": "10 posts for the Fast Food restaurant campaign with a bold red identity. Realistic food scenes, interactive offers and short copy built to convert into orders.",
       "cover": "01-food-no-alternative",
       "images": [
         {
@@ -496,8 +524,8 @@
           "hl": 1050,
           "wm": 760,
           "hm": 760,
-          "alt_ar": "حملة مطعم كاسبيان: الطعام ملوش بديل",
-          "alt_en": "Caspian restaurant: food has no alternative",
+          "alt_ar": "حملة مطعم فاست فود: الطعام ملوش بديل",
+          "alt_en": "Fast Food restaurant: food has no alternative",
           "cover": "01-food-no-alternative-c.webp",
           "cover_m": "01-food-no-alternative-m.webp",
           "cover_w": 640,
@@ -625,9 +653,9 @@
     },
     {
       "slug": "lixora",
-      "title_ar": "لوكورا | حملة العناية بالبشرة",
+      "title_ar": "ليكورا | حملة العناية بالبشرة",
       "title_en": "Lixora | Skincare campaign",
-      "client_ar": "لوكورا",
+      "client_ar": "ليكورا",
       "client_en": "Lixora",
       "kicker_ar": "عناية بالبشرة والتجميل",
       "kicker_en": "Skincare & beauty",
@@ -647,7 +675,7 @@
       ],
       "year": "2026",
       "accent": "#F26522",
-      "desc_ar": "حملة متكاملة لعلامة لوكورا للعناية بالبشرة: تشكيلة منتجات، لقطات تفاصيل، عروض هدايا وحملات موسمية، مع نظام تصميم ثابت يغطي كل نقاط التواصل.",
+      "desc_ar": "حملة متكاملة لعلامة ليكورا للعناية بالبشرة: تشكيلة منتجات، لقطات تفاصيل، عروض هدايا وحملات موسمية، مع نظام تصميم ثابت يغطي كل نقاط التواصل.",
       "desc_en": "A full campaign for the Lixora skincare brand: product lineups, detail shots, gift offers and seasonal pushes, all held together by one consistent design system across every touchpoint.",
       "cover": "01-social-media-pack",
       "images": [
@@ -661,7 +689,7 @@
           "hl": 1050,
           "wm": 760,
           "hm": 760,
-          "alt_ar": "باقة 20+ تصميم سوشيال ميديا للوكورا",
+          "alt_ar": "باقة 20+ تصميم سوشيال ميديا لليكورا",
           "alt_en": "Lixora social media pack of 20+ designs",
           "cover": "01-social-media-pack-c.webp",
           "cover_m": "01-social-media-pack-m.webp",
@@ -691,7 +719,7 @@
           "hl": 1050,
           "wm": 380,
           "hm": 760,
-          "alt_ar": "تصميم حكاية علامة لوكورا",
+          "alt_ar": "تصميم حكاية علامة ليكورا",
           "alt_en": "Lixora brand story design"
         },
         {
@@ -756,7 +784,7 @@
           "hl": 1050,
           "wm": 434,
           "hm": 760,
-          "alt_ar": "ملخص منشورات حملة لوكورا",
+          "alt_ar": "ملخص منشورات حملة ليكورا",
           "alt_en": "Lixora campaign post collage"
         }
       ],

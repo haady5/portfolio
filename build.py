@@ -102,12 +102,25 @@ def grid_markup(data):
     return "\n".join(out)
 
 
+def noscript_markup(data):
+    """Static <noscript> fallback list inside the portfolio section."""
+    out = []
+    for p in data["projects"]:
+        out.append('<li><a href="projects/{slug}.html">{title} — {count} '
+                   '{word}</a></li>'.format(
+                       slug=p["slug"], title=esc(p["title_ar"]),
+                       count=p["count"],
+                       word="تصميم" if p["count"] > 10 else "تصاميم"))
+    return "\n".join(out)
+
+
 def inject_index(data):
     """Write the generated blocks into index.html (between the markers)."""
     index = os.path.join(ROOT, "index.html")
     html = open(index, encoding="utf-8").read()
     blocks = [("FILTERS", filters_markup(data)),
-              ("GRID", grid_markup(data))]
+              ("GRID", grid_markup(data)),
+              ("NOSCRIPT", noscript_markup(data))]
     for name, content in blocks:
         pattern = re.compile(
             r"(<!-- " + name + r":START -->).*?(<!-- " + name + r":END -->)",
@@ -363,26 +376,63 @@ GALLERY_SIZES = "(max-width:359px) 100vw, (max-width:699px) 50vw, (max-width:109
 HERO_SIZES = "(max-width:979px) 92vw, 44vw"
 
 
+def tile_markup(img, num, slug):
+    src = "../images/projects/%s/%s" % (slug, img["file"])
+    src_m = "../images/projects/%s/%s" % (slug, img["file_m"])
+    srcset = "%s %dw, %s %dw" % (src_m, img["wm"], src, img["w"])
+    return (
+        '<button type="button" class="pp-tile reveal" '
+        'data-src="{src}" data-alt="{alt}">'
+        '<span class="pp-tile-num">{num:02d}</span>'
+        '<img src="{src_m}" srcset="{srcset}" sizes="{sizes}" '
+        'alt="{alt}" loading="lazy" decoding="async" width="{wm}" height="{hm}">'
+        '<span class="pp-tile-cap">{alt}</span>'
+        "</button>".format(
+            src=src, src_m=src_m, srcset=srcset, sizes=GALLERY_SIZES,
+            alt=esc(img["alt_ar"]), num=num,
+            wm=img["wm"], hm=img["hm"],
+        )
+    )
+
+
 def gallery_markup(project):
-    tiles = []
-    for i, img in enumerate(project["images"], start=1):
-        src = "../images/projects/%s/%s" % (project["slug"], img["file"])
-        src_m = "../images/projects/%s/%s" % (project["slug"], img["file_m"])
-        srcset = "%s %dw, %s %dw" % (src_m, img["wm"], src, img["w"])
-        tiles.append(
-            '<button type="button" class="pp-tile reveal" '
-            'data-src="{src}" data-alt="{alt}">'
-            '<span class="pp-tile-num">{num:02d}</span>'
-            '<img src="{src_m}" srcset="{srcset}" sizes="{sizes}" '
-            'alt="{alt}" loading="lazy" decoding="async" width="{wm}" height="{hm}">'
-            '<span class="pp-tile-cap">{alt}</span>'
-            "</button>".format(
-                src=src, src_m=src_m, srcset=srcset, sizes=GALLERY_SIZES,
-                alt=esc(img["alt_ar"]), num=i,
-                wm=img["wm"], hm=img["hm"],
+    """Gallery tiles. Projects with a "vgroups" field get one section per
+    version, each with its own heading and its own masonry grid; the tile
+    numbering stays continuous across versions."""
+    vgroups = project.get("vgroups")
+    if not vgroups:
+        return "\n".join(
+            tile_markup(img, i, project["slug"])
+            for i, img in enumerate(project["images"], start=1)
+        )
+
+    blocks = []
+    num = 0
+    for gi, group in enumerate(vgroups):
+        tiles = []
+        for img in project["images"]:
+            if img.get("v") != gi + 1:
+                continue
+            num += 1
+            tiles.append(tile_markup(img, num, project["slug"]))
+        if not tiles:
+            continue
+        blocks.append(
+            '<div class="pp-version-head reveal" data-vgi="{gi}">'
+            '<div>'
+            '<h3 data-vg="title">{title}</h3>'
+            '<p data-vg="sub">{sub}</p>'
+            '</div>'
+            '<span class="proj-count">{n} <span data-i18n="proj_designs">تصميم</span></span>'
+            "</div>".format(
+                gi=gi,
+                title=esc(group["title_ar"]),
+                sub=esc(group["sub_ar"]),
+                n=len(tiles),
             )
         )
-    return "\n".join(tiles)
+        blocks.append('<div class="pp-gallery">\n' + "\n".join(tiles) + "\n</div>")
+    return "\n".join(blocks)
 
 
 def jsonld(project):
@@ -495,9 +545,7 @@ def project_page(data, project, index):
         </div>
         <span class="proj-count">{count} <span data-i18n="proj_designs">تصميم</span></span>
       </div>
-      <div class="pp-gallery" id="ppGallery">
 {gallery}
-      </div>
     </div>
   </section>
 
