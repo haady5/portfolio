@@ -118,11 +118,11 @@ SOURCES = {
     ],
     "lixora": [
         ("01-social-media-pack", "tools/raw/legacy/6.webp",
-         "باقة 20+ تصميم سوشيال ميديا لليكورا", "Lixora social media pack of 20+ designs"),
+         "باقة 20+ تصميم سوشيال ميديا لليكسورا", "Lixora social media pack of 20+ designs"),
         ("02-skincare-lineup", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.06.11 PM.jpeg",
          "تصميم تشكيلة منتجات العناية بالبشرة", "Skincare product lineup design"),
         ("03-brand-story", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.06.12 PM (1).jpeg",
-         "تصميم حكاية علامة ليكورا", "Lixora brand story design"),
+         "تصميم حكاية علامة ليكسورا", "Lixora brand story design"),
         ("04-product-lifestyle", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.06.12 PM (2).jpeg",
          "تصميم منتجات العناية بالبشرة في الاستخدام اليومي", "Daily skincare product design"),
         ("05-gift-set", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.06.12 PM (3).jpeg",
@@ -132,7 +132,7 @@ SOURCES = {
         ("07-summer-offer", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.06.12 PM (5).jpeg",
          "تصميم عرض اشترِ 2 واحصل على الثالث مجاناً", "Buy 2 get 1 offer design"),
         ("08-campaign-collage", "tools/raw/new/WhatsApp Image 2026-11-10 at 5.06.12 PM.jpeg",
-         "ملخص منشورات حملة ليكورا", "Lixora campaign post collage"),
+         "ملخص منشورات حملة ليكسورا", "Lixora campaign post collage"),
     ],
 }
 
@@ -228,9 +228,9 @@ PROJECTS = [
     },
     {
         "slug": "lixora",
-        "title_ar": "ليكورا | حملة العناية بالبشرة",
+        "title_ar": "ليكسورا | حملة العناية بالبشرة",
         "title_en": "Lixora | Skincare campaign",
-        "client_ar": "ليكورا",
+        "client_ar": "ليكسورا",
         "client_en": "Lixora",
         "kicker_ar": "عناية بالبشرة والتجميل",
         "kicker_en": "Skincare & beauty",
@@ -239,7 +239,7 @@ PROJECTS = [
         "services_en": ["Social media", "Product photography", "Offers"],
         "year": "2026",
         "accent": "#F26522",
-        "desc_ar": "حملة متكاملة لعلامة ليكورا للعناية بالبشرة: تشكيلة منتجات، لقطات تفاصيل، عروض هدايا وحملات موسمية، مع نظام تصميم ثابت يغطي كل نقاط التواصل.",
+        "desc_ar": "حملة متكاملة لعلامة ليكسورا للعناية بالبشرة: تشكيلة منتجات، لقطات تفاصيل، عروض هدايا وحملات موسمية، مع نظام تصميم ثابت يغطي كل نقاط التواصل.",
         "desc_en": "A full campaign for the Lixora skincare brand: product lineups, detail shots, gift offers and seasonal pushes, all held together by one consistent design system across every touchpoint.",
         "cover": "01-social-media-pack",
     },
