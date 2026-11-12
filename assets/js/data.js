@@ -663,9 +663,9 @@ window.HAAADY_PROJECTS = {
     },
     {
       "slug": "lixora",
-      "title_ar": "ليكورا | حملة العناية بالبشرة",
+      "title_ar": "ليكسورا | حملة العناية بالبشرة",
       "title_en": "Lixora | Skincare campaign",
-      "client_ar": "ليكورا",
+      "client_ar": "ليكسورا",
       "client_en": "Lixora",
       "kicker_ar": "عناية بالبشرة والتجميل",
       "kicker_en": "Skincare & beauty",
@@ -685,7 +685,7 @@ window.HAAADY_PROJECTS = {
       ],
       "year": "2026",
       "accent": "#F26522",
-      "desc_ar": "حملة متكاملة لعلامة ليكورا للعناية بالبشرة: تشكيلة منتجات، لقطات تفاصيل، عروض هدايا وحملات موسمية، مع نظام تصميم ثابت يغطي كل نقاط التواصل.",
+      "desc_ar": "حملة متكاملة لعلامة ليكسورا للعناية بالبشرة: تشكيلة منتجات، لقطات تفاصيل، عروض هدايا وحملات موسمية، مع نظام تصميم ثابت يغطي كل نقاط التواصل.",
       "desc_en": "A full campaign for the Lixora skincare brand: product lineups, detail shots, gift offers and seasonal pushes, all held together by one consistent design system across every touchpoint.",
       "cover": "01-social-media-pack",
       "images": [
@@ -699,7 +699,7 @@ window.HAAADY_PROJECTS = {
           "hl": 1050,
           "wm": 760,
           "hm": 760,
-          "alt_ar": "باقة 20+ تصميم سوشيال ميديا لليكورا",
+          "alt_ar": "باقة 20+ تصميم سوشيال ميديا لليكسورا",
           "alt_en": "Lixora social media pack of 20+ designs",
           "cover": "01-social-media-pack-c.webp",
           "cover_m": "01-social-media-pack-m.webp",
@@ -729,7 +729,7 @@ window.HAAADY_PROJECTS = {
           "hl": 1050,
           "wm": 380,
           "hm": 760,
-          "alt_ar": "تصميم حكاية علامة ليكورا",
+          "alt_ar": "تصميم حكاية علامة ليكسورا",
           "alt_en": "Lixora brand story design"
         },
         {
@@ -794,7 +794,7 @@ window.HAAADY_PROJECTS = {
           "hl": 1050,
           "wm": 434,
           "hm": 760,
-          "alt_ar": "ملخص منشورات حملة ليكورا",
+          "alt_ar": "ملخص منشورات حملة ليكسورا",
           "alt_en": "Lixora campaign post collage"
         }
       ],

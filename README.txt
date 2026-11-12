@@ -49,7 +49,7 @@ PROJECTS (5 projects · 43 designs)
   wejhati     وجهتي             7      lime
   rox-ab      ROX x AB          4      silver
   fast-food   فاست فود         10      red
-  lixora      ليكورا            8      orange
+  lixora      ليكسورا           8      orange
 
 
 THEME
